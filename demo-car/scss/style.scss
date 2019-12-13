@@ -1,0 +1,873 @@
+$baseColorR: random(200);
+$baseColorG: random(200);
+$baseColorB: random(200);
+$baseColor: rgba($baseColorR, $baseColorG, $baseColorB, 1);
+$bodyColor: linear-gradient(
+  45deg,
+  rgba($baseColorR, $baseColorG, $baseColorB, 1) 0%,
+  rgba($baseColorR + 50, $baseColorG + 50, $baseColorB + 50, 1) 100%
+);
+$innerColor: linear-gradient(
+  45deg,
+  rgba(50, 50, 50, 1) 0%,
+  rgba(100, 100, 100, 1) 100%
+);
+$windowColor: rgba(0, 70, 150, 0.6);
+$tireColor: rgba(0, 0, 0, 1);
+$wheelColor: rgba(100, 100, 100, 1);
+$aeroWheelColor: rgba(random(255), random(255), random(255), 1);
+$lightColor: rgba(random(100) + 155, random(100) + 155, random(100) + 155, 1);
+$shadowColor: rgba(200, 200, 200, 1);
+$seatColor: whitesmoke;
+$nightColor: rgba(40, 40, 40, 1);
+$nightShadowColor: rgba(20, 20, 20, 1);
+$neonColor: rgba(random(200) + 50, random(200) + 50, random(200) + 50, 1);
+
+body {
+  background: #fff;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  font-family: 'Anton', sans-serif;
+  justify-content: center;
+  align-items: center;
+  perspective: 800px;
+  flex-direction: column;
+}
+div {
+  position: absolute;
+  transform-style: preserve-3d;
+  background: $bodyColor;
+  box-sizing: border-box;
+  transition: 1000ms;
+  will-change: transform;
+}
+
+.window, .glass {
+  background: $windowColor;
+}
+
+#field {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+#showcase {
+  pointer-events: none;
+  animation: drive 10000ms linear infinite;
+  .shadow {
+    width: 120px;
+    height: 200px;
+    background: none;
+    transform-origin: 50% 0%;
+    transform: translate(-60px, 25px) translateZ(100px) rotateX(-90deg);
+    .blur {
+      width: 100%;
+      height: 100%;
+      background: $shadowColor;
+      filter: blur(10px);
+    }
+  }
+  .car {
+    transform: translate(-50px, 0px) translateZ(90px);
+    .body {
+      transition: 2000ms;
+      .aero {
+        transform-origin: 50px -100px;
+        transform: scale(0);
+      }
+      .front {
+        transform: translate(0, -20px);
+        .bumper {
+          width: 100px;
+          height: 20px;
+          &::before {
+            content: '';
+            position: absolute;
+            background: orange;
+            width: 6px;
+            height: 6px;
+            border-radius: 20px;
+            transform: translate(5px, 5px);
+          }
+          &::after {
+            content: '';
+            position: absolute;
+            background: orange;
+            width: 6px;
+            height: 6px;
+            border-radius: 20px;
+            transform: translate(100 - 6 - 5px, 5px);
+          }
+          .aero .parts {
+            width: 120px;
+            height: 10px;
+            transform-origin: 50% 0%;
+            transform: translate(-10px, 20px) rotateX(60deg);
+          }
+        }
+        .bonnet {
+          width: 100px;
+          height: 70px;
+          transform-origin: 50% 0%;
+          transform: translate(0px, -24px) translateZ(-66px) rotateX(70 + 0deg);
+          clip-path: polygon(
+            0% 0%,
+            100% 0%,
+            100% 50px,
+            75px 50px,
+            75px 100%,
+            25px 100%,
+            25px 50px,
+            0% 50px
+          );
+          .aero .parts {
+            width: 40px;
+            height: 20px;
+            border-radius: 0 0 3px 3px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,1) 100%);
+            transform: translate(30px, 20px);
+          }
+        }
+        .headlight {
+          width: 25px;
+          height: 20px;
+          transform-origin: 50% 0%;
+          background: none;
+          &_left {
+            transform: translate(1px, -7px) translateZ(-19px) rotateX(70 + 0deg);
+          }
+          &_right {
+            transform: translate(74px, -7px) translateZ(-19px) rotateX(70 + 0deg);
+          }
+          &_cover {
+            width: 25px;
+            height: 20px;
+          }
+          &_unit {
+            width: 25px;
+            height: 20px;
+            background: $lightColor;
+            transform-origin: 50% 100%;
+            transform: rotateX(70deg);
+            &::before {
+              content: '';
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              background: $bodyColor;
+              transform-origin: 0% 0%;
+              transform: rotateY(-90deg);
+              clip-path: polygon(
+                100% 60%,
+                0% 0%,
+                0% 100%
+              );
+            }
+            &::after {
+              content: '';
+              position: absolute;
+              right: 0;
+              width: 20px;
+              height: 20px;
+              background: $bodyColor;
+              transform-origin: 100% 0%;
+              transform: rotateY(90deg);
+              clip-path: polygon(
+                0% 60%,
+                100% 0%,
+                100% 100%
+              );
+            }
+          }
+        }
+        .fender {
+          width: 66px;
+          height: 44px;
+          transform-origin: 0% 0%;
+          background: none;
+          .panel {
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(
+              0 24px,
+              100% 0%,
+              100% 100%,
+              60px 100%,
+              50px 24px,
+              30px 24px,
+              20px 100%,
+              0% 100%
+            );
+          }
+          &_left {
+            transform: translate(100px, -24px) rotateY(90deg);
+            .aero .parts {
+              width: 40px;
+              height: 10px;
+              transform-origin: 100% 0%;
+              transform: translate(-15px, 15px) rotateX(90deg) rotateY(-50deg);
+              &::before {
+                content: '';
+                position: absolute;
+                width: 40px;
+                height: 10px;
+                background: $bodyColor;
+                transform-origin: 0% 0%;
+                transform: translate(40px, 0px) rotateY(35deg);
+              }
+            }
+          }
+          &_right {
+            transform: translate(0px, -24px) rotateY(90deg);
+            .aero .parts {
+              width: 40px;
+              height: 10px;
+              transform-origin: 100% 0%;
+              transform: translate(-15px, 15px) translateZ(-10px) rotateX(90deg) rotateY(-50deg);
+              &::before {
+                content: '';
+                position: absolute;
+                width: 40px;
+                height: 10px;
+                background: $bodyColor;
+                transform-origin: 0% 0%;
+                transform: translate(40px, 0px) rotateY(35deg);
+              }
+            }
+          }
+        }
+        .under {
+          width: 100px;
+          height: 66px;
+          transform-origin: 50% 100%;
+          transform: translate(0, -46px) rotateX(90deg);
+          clip-path: polygon(
+            10px 0%,
+            90px 0%,
+            90px 100%,
+            10px 100%
+          );
+        }
+      }
+      .cockpit {
+        transform: translate(0, -44px) translateZ(-66px);
+        .handle {
+          width: 30px;
+          height: 30px;
+          border-radius: 100%;
+          transform: translate(15px, -5px) translateZ(-15px) rotateX(-20deg);
+          background: none;
+          border: 5px solid rgba(50, 50, 50, 1);
+        }
+        .seat {
+          width: 30px;
+          height: 60px;
+          background: $seatColor;
+          transform-origin: 50% 100%;
+          border-radius: 5px 5px 0 0;
+          &::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 30px;
+            background: $seatColor;
+            transform-origin: 50% 100%;
+            transform: rotateX(-100deg);
+          }
+          &_left {
+            transform: translate(55px, -20px) translateZ(-45px) rotateX(22deg);
+          }
+          &_right {
+            transform: translate(15px, -20px) translateZ(-45px) rotateX(22deg);
+          }
+        }
+        .inner_front {
+          width: 100px;
+          height: 44px;
+          background: $innerColor;
+        }
+        .inner_back {
+          width: 100px;
+          height: 48px;
+          transform-origin: 50% 0%;
+          transform: translateZ(-70px) rotateX(24deg);
+          background: $innerColor;
+        }
+        .door {
+          width: 70px;
+          height: 44px;
+          transform-origin: 0% 0%;
+          background: none;
+          .gull {
+            transition: 1200ms;
+          }
+          .window {
+            width: 70px;
+            height: 30px;
+            transform-origin: 0% 0%;
+            transform: translate(0px, -30px);
+            background: none;
+            overflow: hidden;
+            .glass {
+              width: 70px;
+              height: 30px;
+              clip-path: polygon(
+                30px 0%,
+                100% 0%,
+                100% 100%,
+                0% 100%
+              );
+              transition: 1500ms;
+              transition-timing-function: linear;
+            }
+          }
+          .panel {
+            width: 70px;
+            height: 44px;
+            clip-path: polygon(
+              0% 0%,
+              100% 0%,
+              50px 100%,
+              0% 100%
+            );
+          }
+          .mirror {
+            width: 20px;
+            height: 10px;
+            transform-origin: 0% 0%;
+          }
+          &_left {
+            transform: translate(100px, 0px) rotateY(90deg);
+            .aero .parts {
+              width: 56px;
+              height: 13px;
+              transform-origin: 0% 0%;
+              transform: translate(-6px, 44px) rotateX(45deg);
+            }
+            .mirror {
+              transform: translate(10px, -10px) rotateY(-60deg);
+              &::before {
+                content: '';
+                position: absolute;
+                width: 20px;
+                height: 10px;
+                background: silver;
+                border: 2px solid $baseColor;
+                transform: translateZ(-1px);
+                box-sizing: border-box;
+              }
+            }
+            .panel::before {
+              // content: '';
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              background: $innerColor;
+              transform: translateZ(-1px);
+              clip-path: polygon(
+                1% 1%,
+                99% 1%,
+                50px 99%,
+                1% 99%
+              );
+            }
+          }
+          &_right {
+            transform: translate(0px, 0px) rotateY(90deg);
+            .aero .parts {
+              width: 56px;
+              height: 13px;
+              transform-origin: 0% 0%;
+              transform: translate(-6px, 44px) rotateX(-45deg);
+            }
+            .mirror {
+              transform: translate(10px, -10px) rotateY(60deg);
+              &::before {
+                content: '';
+                position: absolute;
+                width: 20px;
+                height: 10px;
+                background: silver;
+                border: 2px solid $baseColor;
+                transform: translateZ(1px);
+                box-sizing: border-box;
+                backface-visibility: hidden;
+              }
+            }
+            .panel::before {
+              // content: '';
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              background: $innerColor;
+              transform: translateZ(1px);
+              clip-path: polygon(
+                1% 1%,
+                99% 1%,
+                50px 99%,
+                1% 99%
+              );
+            }
+          }
+        }
+        .under {
+          width: 100px;
+          height: 50px;
+          transform-origin: 50% 100%;
+          transform: translate(0, -6px) rotateX(90deg);
+          background: $innerColor;
+        }
+        .roof {
+          width: 100px;
+          transform-origin: 50% 10px;
+          transform: translate(0px, -10px) translateZ(-70px) rotateX(0deg);
+          transition: 2000ms;
+          &_top {
+            width: 100px;
+            height: 40px;
+            transform-origin: 50% 100%;
+            transform: translate(0px, -60px) rotateX(-90deg);
+          }
+          &_back {
+            width: 100px;
+            height: 36px;
+            transform-origin: 50% 0%;
+            transform: translate(0px, -20px) rotateX(-35deg);
+            clip-path: polygon(
+              0% 0%,
+              12px 100%,
+              88px 100%,
+              100% 0%
+            );
+          }
+          &_left {
+            width: 24px;
+            height: 30px;
+            transform-origin: 0% 0%;
+            transform: translate(100px, -20px) rotateY(120deg);
+            clip-path: polygon(
+              0% 0%,
+              100% 100%,
+              0% 100%
+            );
+          }
+          &_right {
+            width: 24px;
+            height: 30px;
+            transform-origin: 0% 0%;
+            transform: translate(0px, -20px) rotateY(60deg);
+            clip-path: polygon(
+              0% 0%,
+              100% 100%,
+              0% 100%
+            );
+          }
+          &_bottom {
+            width: 100px;
+            height: 20px;
+            transform-origin: 50% 100%;
+            transform: translate(0px, -10px) rotateX(90deg);
+            clip-path: polygon(
+              0% 100%,
+              10px 0%,
+              90px 0%,
+              100% 100%
+            );
+          }
+        }
+        .window {
+          background: $windowColor;
+          &_front {
+            width: 100px;
+            height: 42px;
+            transform-origin: 50% 100%;
+            transform: translate(0px, -42px) rotateX(45deg);
+            &::before {
+              content: '';
+              position: absolute;
+              width: 5px;
+              height: 42px;
+              background: $bodyColor;
+            }
+            &::after {
+              content: '';
+              position: absolute;
+              right: 0;
+              width: 5px;
+              height: 42px;
+              background: $bodyColor;
+            }
+          }
+          &_left {
+            width: 70px;
+            height: 30px;
+            transform-origin: 0% 0%;
+            transform: translate(100px, -30px) rotateY(90deg);
+            clip-path: polygon(
+              30px 0%,
+              100% 0%,
+              100% 100%,
+              0% 100%
+            );
+          }
+          &_right {
+            width: 70px;
+            height: 30px;
+            transform-origin: 0% 0%;
+            transform: translate(0px, -30px) rotateY(90deg);
+            clip-path: polygon(
+              30px 0%,
+              100% 0%,
+              100% 100%,
+              0% 100%
+            );
+          }
+        }
+      }
+      .rear {
+        transform: translate(0px, -44px) translateZ(-116px);
+        .bumper {
+          width: 100px;
+          height: 44px;
+          transform: translateZ(-60px);
+          .aero .parts {
+            .arm_right {
+              width: 10px;
+              height: 50px;
+              transform-origin: 0% 0%;
+              transform: translate(18px, -20px) rotateY(90deg);
+              border-radius: 0 0 100% 0;
+            }
+            .arm_left {
+              width: 10px;
+              height: 50px;
+              transform-origin: 0% 0%;
+              transform: translate(82px, -20px) rotateY(90deg);
+              border-radius: 0 0 100% 0;
+            }
+            .wing {
+              width: 120px;
+              height: 20px;
+              transform-origin: 50% 100%;
+              transform: translate(-10px, -35px) rotateX(70deg);
+            }
+            .garnish {
+              width: 100px;
+              height: 10px;
+              transform: translateZ(-0.1px);
+            }
+            .bottom {
+              width: 100px;
+              height: 10px;
+              transform-origin: 50% 0%;
+              transform: translate(0px, 44px) rotateX(-40deg);
+            }
+          }
+          .taillight {
+            content: '';
+            position: absolute;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: rgba(200, 0, 0, 1);
+            border-radius: 100%;
+            transform: translateZ(-1px);
+            &_right {
+              right: 5px;
+              &::before {
+                content: '';
+                position: absolute;
+                right: 14px;
+                width: 12px;
+                height: 12px;
+                border-radius: 100%;
+                background: rgba(200, 0, 0, 1);
+              }
+            }
+            &_left {
+              left: 5px;
+              &::before {
+                content: '';
+                position: absolute;
+                left: 14px;
+                width: 12px;
+                height: 12px;
+                border-radius: 100%;
+                background: rgba(200, 0, 0, 1);
+              }
+            }
+          }
+        }
+        .fender {
+          width: 60px;
+          height: 44px;
+          background: none;
+          transform-origin: 0% 0%;
+          .panel {
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(
+              20px 0%,
+              100% 0%,
+              100% 100%,
+              50px 100%,
+              40px 24px,
+              20px 24px,
+              10px 100%,
+              0% 100%
+            );
+          }
+          &_left {
+            transform: translate(100px, 0px) rotateY(90deg);
+            .aero .parts {
+              width: 47px;
+              height: 10px;
+              transform-origin: 100% 0%;
+              transform: translate(-30px, 10px) rotateX(90deg) rotateY(-65deg);
+              &::before {
+                content: '';
+                position: absolute;
+                width: 42px;
+                height: 10px;
+                background: $bodyColor;
+                transform-origin: 100% 0%;
+                transform: translate(5px, 0px) rotateY(-115deg);
+              }
+            }
+          }
+          &_right {
+            transform: rotateY(90deg);
+            .aero .parts {
+              width: 47px;
+              height: 10px;
+              transform-origin: 100% 0%;
+              transform: translate(-30px, 10px) rotateX(-90deg) rotateY(65deg);
+              &::before {
+                content: '';
+                position: absolute;
+                width: 42px;
+                height: 10px;
+                background: $bodyColor;
+                transform-origin: 100% 0%;
+                transform: translate(5px, 0px) rotateY(115deg);
+              }
+            }
+          }
+        }
+        .under {
+          width: 100px;
+          height: 60px;
+          transform-origin: 50% 100%;
+          transform: translate(0px, -16px) rotateX(90deg);
+          clip-path: polygon(
+            10px 0%,
+            90px 0%,
+            90px 100%,
+            10px 100%
+          );
+        }
+        .luggage {
+          width: 100px;
+          height: 40px;
+          transform-origin: 50% 100%;
+          transform: translate(0px, -40px) translateZ(-20px) rotateX(90deg);
+          background: none;
+          .panel {
+            width: 100px;
+            height: 40px;
+            transform-origin: 50% 100%;
+            clip-path: polygon(
+              0% 0%,
+              0% 100%,
+              10px 20px,
+              90px 20px,
+              100% 100%,
+              100% 0%
+            );
+            transition-delay: 500ms;
+          }
+        }
+      }
+    }
+    .wheel {
+      .tire {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        background: $wheelColor;
+        border: 8px solid $tireColor;
+        transition: 500ms;
+        transition-delay: 500ms;
+        &_left {
+          transform: translate(75px, -15px) rotateY(90deg);
+        }
+        &_right {
+          transform: translate(-15px, -15px) rotateY(90deg);
+        }
+      }
+      .shaft {
+        width: 90px;
+        height: 10px;
+        background: $wheelColor;
+        transform: translate(5px, 0px);
+        transition: 500ms;
+        transition-delay: 500ms;
+        &::before {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: $wheelColor;
+          transform: rotateX(90deg);
+        }
+      }
+      .front {
+        transform: translate(0px, 0px) translateZ(-40px);
+      }
+      .rear {
+        transform: translate(0px, 0px) translateZ(-145px);
+      }
+    }
+  }
+}
+@keyframes drive {
+  0% {
+    transform: rotateX(-30deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(-30deg) rotateY(-360deg);
+  }
+}
+
+// action
+.action {
+  position: relative;
+  z-index: 9999999; 
+  display: block;
+  transform: translateX(-300px);
+  line-height: 14px;
+  margin: 5px;
+  &::before {
+    content: attr(data-text);
+    font-size: 16px;
+    font-family: 'Encode Sans Condensed', sans-serif;
+    padding-left: 20px;
+    transition: 1000ms;
+    cursor: pointer;
+  }
+  &:hover::before {
+    color: $baseColor;
+    transition: 300ms;
+  }
+  &:checked::before {
+    
+  }
+  &.bonnet[type="checkbox"]:checked ~ #showcase .bonnet {
+    transform: translate(0px, -24px) translateZ(-66px) rotateX(70 + 60deg);
+  }
+  &.door[type="checkbox"]:checked ~ #showcase .door_left {
+    transform: translate(100px, 0px) rotateY(90 - 60deg);
+  }
+  &.door[type="checkbox"]:checked ~ #showcase .door_right {
+    transform: translate(0px, 0px) rotateY(90 + 60deg);
+  }
+  &.roof[type="checkbox"]:checked ~ #showcase .roof {
+    transform: translate(0px, -10px) translateZ(-80px) rotateX(0 + 90deg);
+    transition-delay: 300ms;
+  }
+  &.roof[type="checkbox"]:checked ~ #showcase .roof_top {
+    transform: translate(0px, -60px) rotateX(-90 - 90deg);
+    transition-delay: 800ms;
+  }
+  &.roof[type="checkbox"]:checked ~ #showcase .luggage .panel {
+    transform-origin: 50% 0%;
+    transform: rotateX(-40deg);
+    transition-delay: 0ms;
+  }
+  &.luggage[type="checkbox"]:checked ~ #showcase .luggage .panel {
+    transform: rotateX(-40deg);
+    transition-delay: 500ms;
+  }
+  &.window[type="checkbox"]:checked ~ #showcase .window .glass {
+    transform: translateY(30px);
+  }
+  &.headlight[type="checkbox"]:checked ~ #showcase .headlight_left {
+    transform: translate(1px, -7px) translateZ(-19px) rotateX(70 + 40deg);
+    transition: 600ms;
+  }
+  &.headlight[type="checkbox"]:checked ~ #showcase .headlight_right {
+    transform: translate(74px, -7px) translateZ(-19px) rotateX(70 + 40deg);
+    transition: 600ms;
+  }
+  &.gull[type="checkbox"]:checked ~ #showcase .door_left .gull {
+    transform: rotateY(-20deg) rotateZ(-60deg);
+  }
+  &.gull[type="checkbox"]:checked ~ #showcase .door_right .gull {
+    transform: rotateY(20deg) rotateZ(-60deg);
+  }
+  &.night[type="checkbox"]:checked ~ #field {
+    background: $nightColor;
+  }
+  &.night[type="checkbox"]:checked ~ #showcase .shadow .blur {
+    background: $nightShadowColor;
+  }
+  &.night[type="checkbox"]:checked ~ .action::before {
+    color: #fff;
+  }
+  &.night[type="checkbox"]:checked::before {
+    color: #fff;
+  }
+  &.neon[type="checkbox"]:checked ~ #showcase .shadow .blur {
+    background: $neonColor;
+  }
+  &.run[type="checkbox"]:checked ~ #showcase .car {
+    transform: translate(200px, 0px) translateZ(90px);
+  }
+  &.run[type="checkbox"]:checked ~ #showcase .shadow {
+    transform: translate(190px, 25px) translateZ(100px) rotateX(-90deg);
+  }
+  &.lowdown[type="checkbox"]:checked ~ #showcase .body {
+    transform: translate(0px, 16px);
+  }
+  &.lowdown[type="checkbox"]:checked ~ #showcase .tire_left {
+    transform: translate(90px, -15px) rotateZ(-12deg) rotateY(90deg);
+    transition-delay: 0ms;
+  }
+  &.lowdown[type="checkbox"]:checked ~ #showcase .tire_right {
+    transform: translate(-30px, -15px) rotateZ(12deg) rotateY(90deg);
+    transition-delay: 0ms;
+  }
+  &.lowdown[type="checkbox"]:checked ~ #showcase .shaft {
+    width: 120px;
+    transform: translate(-10px, 0px);
+    transition-delay: 0ms;
+  }
+  &.aero[type="checkbox"]:checked ~ #showcase .aero {
+    transform: scale(1);
+  }
+  &.aero[type="checkbox"]:checked ~ #showcase .tire {
+    background: $aeroWheelColor;
+    border-width: 3px;
+  }
+  &.aero[type="checkbox"]:checked ~ #showcase .shaft {
+    background: $aeroWheelColor;
+    &::before {
+      background: $aeroWheelColor;
+    }
+  }
+  &.zoom[type="checkbox"]:checked ~ #showcase .camera {
+    transform: scale3d(2, 2, 2);
+  }
+  &.ride[type="checkbox"]:checked ~ #showcase .camera {
+    transform: scale3d(50, 50, 50) translate(20px, 42px) translateZ(17px);
+  }
+}
+
+
+
+
+
+
+
