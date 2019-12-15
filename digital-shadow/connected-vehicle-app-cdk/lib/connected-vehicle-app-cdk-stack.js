@@ -33,8 +33,6 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
      versioned: false, bucketName: bucketName , websiteIndexDocument: 'index.html' 
     });
     
-    var sourceBucket = new s3.Bucket(this, 'smrt-parking')
-
     webBucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:GetObject'],
       resources: [webBucket.arnForObjects('*')],
