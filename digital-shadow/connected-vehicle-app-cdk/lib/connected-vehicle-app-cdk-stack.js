@@ -19,7 +19,7 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
     super(scope, id, props);
 
     //Initailize the name
-    var bucketName = "conneted-vehicle-app-" +  cdk.Aws.ACCOUNT_ID
+    var bucketName = "connected-vehicle-app-" +  cdk.Aws.ACCOUNT_ID
     var poolName = "connected-vehicle-identity-pool-" + cdk.Aws.ACCOUNT_ID
    
 
