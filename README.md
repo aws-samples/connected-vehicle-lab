@@ -1,6 +1,8 @@
 ## Connected Vehicle Lab
 
-Connected Vehicle Immersion day lab files
+Table of Content
+1. Connected Vehicle Immersion day lab files
+2. <a href="https://github.com/aws-samples/connected-vehicle-lab/digital-shadow"> Digital Shadow of Connected Vehicle </a>
 
 ## License Summary
 

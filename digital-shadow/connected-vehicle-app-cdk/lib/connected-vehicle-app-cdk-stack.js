@@ -115,11 +115,13 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
                 "Sid": "deviceAccessPolicyStatement",
                 "Effect": "Allow",
                 "Action": [
-                    "iot:Receive",
-                    "iot:Subscribe",
-                    "iot:Connect",
-                    "iot:GetThingShadow",
-                    "iot:UpdateThingShadow"
+                  "iot:Receive",
+                  "iot:Subscribe",
+                  "iot:Connect",
+                  "iot:GetThingShadow",
+                  "iot:DeleteThingShadow",
+                  "iot:UpdateThingShadow",
+                  "iot:Publish"
                 ],
                 "Resource": "*"
             }

@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-import sys
 import ssl
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
 import json
 import time
+import os
 
 #Setup our MQTT client and security certificates
 #Make sure your certificate names match what you downloaded from AWS IoT
@@ -13,17 +13,18 @@ import time
 clientId = "1HGCP2F31BA126165-write"
 mqttc = AWSIoTMQTTShadowClient(clientId)
 
+dirPath = str(os.getcwd())
+
 #Make sure you use the correct region!
 mqttc.configureEndpoint("data.iot.us-east-1.amazonaws.com",8883)
-mqttc.configureCredentials("./rootCA.pem","./tcu.private.key","./tcu.cert.pem")
+mqttc.configureCredentials(dirPath + "/tcu/rootCA.pem", dirPath + "/tcu/tcu.private.key",  dirPath + "/tcu/tcu.cert.pem")
 
 shadowClient=mqttc.createShadowHandlerWithName("tcu",True)
 
 shadowMessage = { "state" :
                     {
-                        "desired": {
-                            "door"      : 'close',
-                            "headlight" : 'off'
+                        "reported": {
+                            "door"      : 'close'
                         }
                     }
                  
@@ -36,15 +37,22 @@ def json_encode(string):
 
 #Function to print message
 def on_message(message, response, token):
-    print " response : " + response + " , message : " + message
+    print (" response : " + response + " , message : " + message)
+    
+#Function to print message
+def delete_message(message, response, token):
+    print (" response : " + response + " , message : " + message)
+
 
 shadowClient.on_message= on_message
 shadowClient.json_encode=json_encode
 
 #sending vechile shadow update
 mqttc.connect()
-print "Connected"
+print ("Connected")
+#delete the existing desire state from shadow 
+shadowClient.shadowDelete(delete_message, 5)
 shadowClient.shadowUpdate(shadowMessage,on_message, 5)
-print "Shadow Update Sent"
+print ("Shadow Update Sent")
 time.sleep(5)
 mqttc.disconnect()
