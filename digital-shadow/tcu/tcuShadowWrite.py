@@ -13,11 +13,12 @@ import os
 clientId = "1HGCP2F31BA126165-write"
 mqttc = AWSIoTMQTTShadowClient(clientId)
 
-dirPath = str(os.getcwd())
+#change into current directory so certificate can read from the path
+os.chdir(os.path.dirname(__file__))
 
 #Make sure you use the correct region!
 mqttc.configureEndpoint("data.iot.us-east-1.amazonaws.com",8883)
-mqttc.configureCredentials(dirPath + "/tcu/rootCA.pem", dirPath + "/tcu/tcu.private.key",  dirPath + "/tcu/tcu.cert.pem")
+mqttc.configureCredentials("./rootCA.pem", "./tcu.private.pem.key",  "./tcu.cert.pem.crt")
 
 shadowClient=mqttc.createShadowHandlerWithName("tcu",True)
 
