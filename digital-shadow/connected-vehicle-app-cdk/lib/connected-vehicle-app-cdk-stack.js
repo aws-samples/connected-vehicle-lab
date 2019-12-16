@@ -41,13 +41,19 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
    
     var distribution = new cf.CloudFrontWebDistribution(this, 'Distribution', {
     originConfigs: [{
-        behaviors: [{ isDefaultBehavior: true }],
+        behaviors: [{ isDefaultBehavior: true , 
+          allowedMethods : cf.CloudFrontAllowedMethods.ALL, 
+          cachedMethods : cf.CloudFrontAllowedCachedMethods.GET_HEAD_OPTIONS,
+          defaultTtl : 0,
+          maxTtl : 0,
+          minTtl : 0,
+          compress : false 
+        }],
         s3OriginSource: {
             s3BucketSource: webBucket,
             originAccessIdentityId: oai.ref,
         },
     }],
-    
     errorConfigurations: [{
         errorCode: 403,
         responseCode: 200,
@@ -60,9 +66,12 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
     comment:  webBucket.bucketName,
     viewerProtocolPolicy: cf.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
     removalPolicy: cdk.RemovalPolicy.DESTROY,
+    priceClass : cf.PriceClass.PRICE_CLASS_ALL
     });
 
-
+    
+    
+    
     new s3Deploy.BucketDeployment(this, 'DeployWebsite', {
         sources : [s3Deploy.Source.bucket(s3.Bucket.fromBucketName(this, 'SourceBucket', 'smrt-parking'),'demo-car2.zip')],
         destinationBucket: webBucket,
