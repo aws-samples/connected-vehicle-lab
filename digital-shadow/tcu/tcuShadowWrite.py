@@ -18,7 +18,7 @@ os.chdir(os.path.dirname(__file__))
 
 #Make sure you use the correct region!
 mqttc.configureEndpoint("<random-char>-ats.iot.us-east-1.amazonaws.com",8883)
-mqttc.configureCredentials("./rootCA.pem", "./tcu.private.pem.key",  "./tcu.cert.pem.crt")
+mqttc.configureCredentials("./rootCA.pem", "./tcu-private.pem.key",  "./tcu-certificate.pem.crt")
 
 shadowClient=mqttc.createShadowHandlerWithName("tcu",True)
 
