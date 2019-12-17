@@ -103,6 +103,8 @@ Now we have both Things on cloud and device client is ready to communicate.
 
 You should be able to see a virtual car with list of command checkbox. 
 Only 3 command Door, Headlight and Window has implemented and rest is for you to implement. 
+
+
 ![Digital Shadow Read and Write](https://amitji-tech.s3.amazonaws.com/Digital_Shadow_run.gif)
 
 
