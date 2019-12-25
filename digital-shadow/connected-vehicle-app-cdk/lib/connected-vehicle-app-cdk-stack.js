@@ -73,7 +73,7 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
     
     
     new s3Deploy.BucketDeployment(this, 'DeployWebsite', {
-        sources : [s3Deploy.Source.bucket(s3.Bucket.fromBucketName(this, 'SourceBucket', 'smrt-parking'),'demo-car2.zip')],
+        sources : [s3Deploy.Source.bucket(s3.Bucket.fromBucketName(this, 'SourceBucket', 'amitji-tech'),'demo-carv2.zip')],
         destinationBucket: webBucket,
         distribution: distribution,
     });
