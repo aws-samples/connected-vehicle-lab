@@ -5,6 +5,7 @@ Login into AWS console and Create a Cloud 9 environment, Default configuration s
 
 #### Create Stack using AWS CDK
 Open Cloud 9 IDE environment and clone git repository or upload code files from your local directory.
+
 ```git clone https://github.com/aws-samples/connected-vehicle-lab/```
 
 You should have below directory under your Cloud9 IDE root folder
