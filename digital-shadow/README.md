@@ -9,7 +9,7 @@ Open Cloud 9 IDE environment and clone git repository or upload code files from 
 ```git clone https://github.com/aws-samples/connected-vehicle-lab/```
 
 You should have below directory under your Cloud9 IDE root folder
-digital-shadow
+connected-vehicle-la/digital-shadow
  - connected-vehicle-app-cdk  
  - demo-car 
  - tcu
@@ -18,19 +18,19 @@ Open Cloud 9 IDE environment terminal window and install AWS CDK. More informati
 
 ```npm install -g aws-cdk```
 
-```cd digital-shadow/connected-vehicle-app-cdk ```
+```cd connected-vehicle-lab/digital-shadow/connected-vehicle-app-cdk ```
 
-```npm install ```  It will install npm packages required for connected-vehicle-app-cdk.
+```npm install ```  install npm packages required for connected-vehicle-app-cdk.
 
 Now fire cdk synth command to validate the setup. If it’s a YAML output that means everything is in order 
 
 ```cdk synth```
 
 Open connected-vehicle-app-cdk/lib/connected-vehicle-app-cdk-stack.js into IDE
-You will find it is going to create
+It will create - 
 1. Cloudfront distribution of the website
 2. Download the source code and create S3 bucket and website
-3. Identity pool and allow unauthenticated identities (only meant to simplify the setup otherwise always go ahead with Authenticated identities)
+3. Identity pool and allow unauthenticated identities (only meant to simplify the setup otherwise always use Authenticated identities)
 4. IoT Device and Policy. We will use AWS IoT Console to create a X509 Certificate and associate with this policy.
 
 Now lest deploy the stack
@@ -57,9 +57,12 @@ connected-vehicle-app.devicePolicy = devicePolicy
 Now lets open AWS IoT Core console page > Manage > open ‘tcu’ things page.
 
 We will generate the certificate and associate the policy- 
-Click on security > create certificate > activate  and download individual *-private.pem.key and *-certificate.pem.crt files. 
+Click on security > create certificate > activate  and download individual *-private.pem.key and *-certificate.pem.crt files.  > Attach policy 'devicePolicy'
 
-Follow the same approach for tcuShadowWrite.py and update the endpoint
+For both tcuShadowWrite.py and tcuShadowRead.py  -
+
+1) mqttc.configureEndpoint() - Update IoT Endpoint (AWS IoT Core Console > Setting > Custom EndPoint) 
+2) mqttc.configureCredentials() - Copy certificate under tcu folder  and update certficate name  
 
 lets install AWSIoTPythonSDK 
 
@@ -74,20 +77,25 @@ lets install AWSIoTPythonSDK
 ….
 Successfully installed AWSIoTPythonSDK-1.4.7
 
-Now you should be able to run 
+Now open tcuShadowRead.py in Cloud 9 IDE and click run (green button) 
+You should see response like
 
-```python tcuShadowRead.py```
+>Connected
+>Listening for Delta Messages
 
-Connected
-Listening for Delta Messages
 
-```Python tcuShadowWrite.py```
+Now open tcuShadowWrite.py in Cloud 9 IDE and click run (green button) 
+You should see response like
 
-Connected
+>Connected
+> response : accepted , message : {"version":xxx,"timestamp":xxxxx,"clientToken":"xx-xxx-xx-xx"}
+>Shadow Update Sent
+> response : accepted , message : {"state":{"reported":{"door":"close"}},"metadata":{"reported":{"door":{"timestamp":xxxx}}},"version":xxx,"timestamp":xxx,"clientToken":"xxx-xxx-xxx-xx"}
+
+
 
 #### Connected vehicle app
-Update the IDENTITY_POOL_ID from cdk output into demo-car/js/appVariables.js
-Open a new terminal and run below command to Update the appVariables.js file into s3 bucket ‘connected-vehicle-app-<account-id>’
+Open connected-vehicle-lab/digital-shadow/demo-car/js/appVariables.js and update IDENTITY_POOL_ID value from cdk output  
 
 Also set IOT_ENDPOINT :  AWS IoT Core Console > Setting > Custom endpoint
 
@@ -95,7 +103,10 @@ Make sure you are out of sudo su ( use exit if its still showing root user)
 
 ```exit```
 
-```aws s3 cp  ~/environment/digital-shadow/demo-car/js/appVariables.js s3://connected-vehicle-app-<account-id>/demo-car/js/```
+Open a new terminal and run below command to Update the appVariables.js file into s3 bucket ‘connected-vehicle-app-<account-id>’. 
+
+
+```aws s3 cp  ~/environment/connected-vehicle-lab/digital-shadow/demo-car/js/appVariables.js s3://connected-vehicle-app-<account-id>/demo-car/js/```
 
 
 Lets open the connected vehicle app. Refer to CDK output connected-vehicle-app.ConnectedVehicleApp . It has your app url. 
@@ -106,7 +117,7 @@ You should be able to see a virtual car with list of command checkbox.
 Only 3 command Door, Headlight and Window has implemented and rest is for you to implement. 
 
 
-![Digital Shadow Read and Write](https://amitji-tech.s3.amazonaws.com/Digital_Shadow_run.gif)
+https://amitji-tech.s3.amazonaws.com/Digital_Shadow_run.gif
 
 
 ## License Summary

@@ -70,13 +70,13 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
     });
 
     
-    
-    
     new s3Deploy.BucketDeployment(this, 'DeployWebsite', {
         sources : [s3Deploy.Source.bucket(s3.Bucket.fromBucketName(this, 'SourceBucket', 'amitji-tech'),'demo-carv2.zip')],
         destinationBucket: webBucket,
         distribution: distribution,
     });
+
+    new cdk.CfnOutput(this, "ConnectedVehicleBucket", {description : 'Connected Vehicle Bucket', value : bucketName }) 
 
     new cdk.CfnOutput(this, "ConnectedVehicleApp", {description : 'Connected Vehicle App', value : distribution.domainName + '/demo-car/demo.html'}) 
 
