@@ -46,11 +46,11 @@ Do you wish to deploy these changes (y/n)? y
 Cloudfront distribution takes a while. So pls wait and have a cup of coffee.
 After successful run, You will get below output from cdk - 
 
-connected-vehicle-app.unauthenticatedRoleArn = arn:aws:iam::<AWS_account_ID>:role/connected-vehicle-app-UnAuth<randon-char>
-connected-vehicle-app.ConnectedVehicleApp = <random-char>.cloudfront.net/demo-car/demo.html
-connected-vehicle-app.identityPoolId = us-east-1:<random-char>
-connected-vehicle-app.deviceName = tcu
-connected-vehicle-app.devicePolicy = devicePolicy
+1) connected-vehicle-app.unauthenticatedRoleArn = arn:aws:iam::<AWS_account_ID>:role/connected-vehicle-app-UnAuth<randon-char>
+2) connected-vehicle-app.ConnectedVehicleApp = <random-char>.cloudfront.net/demo-car/demo.html
+3) connected-vehicle-app.identityPoolId = us-east-1:<random-char>
+4) connected-vehicle-app.deviceName = tcu
+5) connected-vehicle-app.devicePolicy = devicePolicy
 
 ####  Device Enviornment Configuration and Authentication
 
