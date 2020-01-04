@@ -9,7 +9,7 @@ Open Cloud 9 IDE environment and clone git repository or upload code files from 
 ```git clone https://github.com/aws-samples/connected-vehicle-lab/```
 
 You should have below directory under your Cloud9 IDE root folder
-connected-vehicle-la/digital-shadow
+connected-vehicle-lab/digital-shadow
  - connected-vehicle-app-cdk  
  - demo-car 
  - tcu
@@ -105,7 +105,7 @@ Make sure you are out of sudo su ( use exit if its still showing root user)
 ```exit```
 
 Open a new terminal and run below command to Update the appVariables.js file into s3 bucket ‘connected-vehicle-app-<account-id>’. 
-
+*note : update the bucket name in below command connected-vehicle-app.ConnectedVehicleBucket
 
 ```aws s3 cp  ~/environment/connected-vehicle-lab/digital-shadow/demo-car/js/appVariables.js s3://connected-vehicle-app-<account-id>/demo-car/js/```
 
