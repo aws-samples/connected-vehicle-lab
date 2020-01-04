@@ -1,0 +1,5 @@
+# CDK Output
+cdk.out/
+
+# Dependency directories
+node_modules/
