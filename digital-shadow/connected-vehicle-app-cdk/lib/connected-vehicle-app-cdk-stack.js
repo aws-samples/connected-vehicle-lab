@@ -7,7 +7,6 @@ const cognito = require('@aws-cdk/aws-cognito');
 const awsIoT = require('@aws-cdk/aws-iot');
 
 
-
 class ConnectedVehicleAppCdkStack extends cdk.Stack {
   /**
    *
@@ -23,22 +22,26 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
     var poolName = "connected-vehicle-identity-pool-" + cdk.Aws.ACCOUNT_ID
    
 
-    // Setup the origin access identiy for cloud front
-     cf.cloudFrontOriginAccessIdentityConfig = { comment: cdk.stackName };
-       const oai = new cf.CfnCloudFrontOriginAccessIdentity(this, 'OAI', {cloudFrontOriginAccessIdentityConfig : { comment: this.stackName }
-     });
+    //Setup the origin access identiy for cloud front
+    const oai = new cf.CfnCloudFrontOriginAccessIdentity(this, 'OAI', {cloudFrontOriginAccessIdentityConfig : { comment: this.stackName }
+    });
 
     // The code that defines your stack goes here
     var webBucket = new s3.Bucket(this, "vehicle-app-website", {
      versioned: false, bucketName: bucketName , websiteIndexDocument: 'index.html' 
     });
     
+    const principal = new iam.CanonicalUserPrincipal(oai.attrS3CanonicalUserId)
+
     webBucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:GetObject'],
       resources: [webBucket.arnForObjects('*')],
-      principals: [new iam.CanonicalUserPrincipal(oai.attrS3CanonicalUserId)],
+      principals: [principal],
     }));
    
+    //Import the oai to assign with distribution origin
+   const oaiImported = cf.OriginAccessIdentity.fromOriginAccessIdentityName(this, 'OAIImported', oai.ref);
+
     var distribution = new cf.CloudFrontWebDistribution(this, 'Distribution', {
     originConfigs: [{
         behaviors: [{ isDefaultBehavior: true , 
@@ -51,8 +54,8 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
         }],
         s3OriginSource: {
             s3BucketSource: webBucket,
-            originAccessIdentityId: oai.ref,
-        },
+            originAccessIdentity : oaiImported 
+        }
     }],
     errorConfigurations: [{
         errorCode: 403,
@@ -66,7 +69,7 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
     comment:  webBucket.bucketName,
     viewerProtocolPolicy: cf.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
     removalPolicy: cdk.RemovalPolicy.DESTROY,
-    priceClass : cf.PriceClass.PRICE_CLASS_ALL
+    priceClass : cf.PriceClass.PRICE_CLASS_100
     });
 
     
@@ -77,7 +80,6 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
     });
 
     new cdk.CfnOutput(this, "ConnectedVehicleBucket", {description : 'Connected Vehicle Bucket', value : bucketName }) 
-
     new cdk.CfnOutput(this, "ConnectedVehicleApp", {description : 'Connected Vehicle App', value : distribution.domainName + '/demo-car/demo.html'}) 
 
 
@@ -137,10 +139,9 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
 
   //Create policy    
   var devicePolicy = new awsIoT.CfnPolicy(this, "DevicePolicyDcoument", { policyDocument : devicePolicyDocument, policyName: "devicePolicy"}) 
+  
   new cdk.CfnOutput(this, 'deviceName', { value: thing.thingName , description : 'Device Name'});
   new cdk.CfnOutput(this, 'devicePolicy', { value: devicePolicy.policyName , description : 'Policy Name'});
-
-  
   }
 }
 

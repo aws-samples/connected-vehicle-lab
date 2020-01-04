@@ -14,9 +14,9 @@ connected-vehicle-la/digital-shadow
  - demo-car 
  - tcu
 
-Open Cloud 9 IDE environment terminal window and install AWS CDK. More information @ https://aws.amazon.com/cdk/
+Open Cloud 9 IDE environment terminal window and install AWS CDK. More information @ https://aws.amazon.com/cdk/. This code has tested with CDK [1.19.0]
 
-```npm install -g aws-cdk```
+```npm install -g  aws-cdk@1.19.0```
 
 ```cd connected-vehicle-lab/digital-shadow/connected-vehicle-app-cdk ```
 
@@ -48,9 +48,10 @@ After successful run, You will get below output from cdk -
 
 1) connected-vehicle-app.unauthenticatedRoleArn = arn:aws:iam::<AWS_account_ID>:role/connected-vehicle-app-UnAuth<randon-char>
 2) connected-vehicle-app.ConnectedVehicleApp = <random-char>.cloudfront.net/demo-car/demo.html
-3) connected-vehicle-app.identityPoolId = us-east-1:<random-char>
-4) connected-vehicle-app.deviceName = tcu
-5) connected-vehicle-app.devicePolicy = devicePolicy
+3) connected-vehicle-app.ConnectedVehicleBucket = connected-vehicle-app-<AWS_account_ID>
+4) connected-vehicle-app.identityPoolId = us-east-1:<random-char>
+5) connected-vehicle-app.deviceName = tcu
+6) connected-vehicle-app.devicePolicy = devicePolicy
 
 ####  Device Enviornment Configuration and Authentication
 
