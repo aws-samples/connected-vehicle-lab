@@ -28,7 +28,7 @@ class ConnectedVehicleAppCdkStack extends cdk.Stack {
 
     // The code that defines your stack goes here
     var webBucket = new s3.Bucket(this, "vehicle-app-website", {
-     versioned: false, bucketName: bucketName , websiteIndexDocument: 'index.html' 
+     versioned: false, bucketName: bucketName , websiteIndexDocument: 'index.html' , removalPolicy: cdk.RemovalPolicy.DESTROY
     });
     
     const principal = new iam.CanonicalUserPrincipal(oai.attrS3CanonicalUserId)
