@@ -1,5 +1,7 @@
 # Build An Alexa Skill 'Open my trunk'
-<img src="https://amitji-tech.s3.amazonaws.com/Device-Shadow.png" />
+
+
+![Alexa Skill and Device gateway](https://amitji-tech.s3.amazonaws.com/Device-Shadow.png)
 
 ### This is a simple tutorial to introduce a simple Alexa skill and code.
 
