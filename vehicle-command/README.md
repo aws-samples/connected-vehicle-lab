@@ -1,5 +1,5 @@
-# Build An Alexa Hello World Skill
-<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
+# Build An Alexa Skill 'Open my trunk'
+<img src="https://amitji-tech.s3.amazonaws.com/Device-Shadow.png" />
 
 ### This is a simple tutorial to introduce a simple Alexa skill and code.
 
