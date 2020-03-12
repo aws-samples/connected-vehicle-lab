@@ -1,0 +1,153 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "genie",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "WindowCommandIntent",
+                    "slots": [
+                        {
+                            "name": "w_action",
+                            "type": "w_action_type"
+                        }
+                    ],
+                    "samples": [
+                        "{w_action} my window",
+                        "window {w_action}",
+                        "{w_action} window"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "DoorCommandIntent",
+                    "slots": [
+                        {
+                            "name": "d_action",
+                            "type": "d_action_type"
+                        }
+                    ],
+                    "samples": [
+                        "{d_action} the door",
+                        "door {d_action}",
+                        "{d_action} my door",
+                        "{d_action} door"
+                    ]
+                },
+                {
+                    "name": "HeadlightCommandIntent",
+                    "slots": [
+                        {
+                            "name": "h_action",
+                            "type": "h_action_type"
+                        }
+                    ],
+                    "samples": [
+                        "switch {h_action} my headlight",
+                        "headlight {h_action}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "w_action_type",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "close"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "open"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "raise"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lower"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "down"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "up"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "d_action_type",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "shut"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "unlock"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lock"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "close"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "open"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "h_action_type",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "off"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "on"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

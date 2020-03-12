@@ -1,0 +1,43 @@
+{
+    "manifest": {
+        "publishingInformation": {
+            "locales": {
+                "en-US": {
+                    "name": "vehicle-command",
+                    "summary": "Control Vehicle using voice command",
+                    "description": "Allow you to control vehicle using voice command",
+                    "examplePhrases": [
+                        "Alexa open genie",
+                        "ask genie to lower window",
+                        "window up"
+                    ],
+                    "keywords": []
+                },
+                "en-IN": {
+                    "name": "vehicle-command",
+                    "summary": "Control Vehicle using voice command",
+                    "description": "Allow you to control vehicle using voice command",
+                    "examplePhrases": [
+                        "Alexa open genie",
+                        "ask genie to lower window",
+                        "window up"
+                    ],
+                    "keywords": []
+                }
+            },
+            "isAvailableWorldwide": true,
+            "testingInstructions": "Sample Testing Instructions.",
+            "category": "KNOWLEDGE_AND_TRIVIA",
+            "distributionCountries": []
+        },
+        "apis": {
+            "custom": {
+                "endpoint": {
+                    "sourceDir": "lambda/custom",
+                    "uri": "ask-custom-vehicle-command-default"
+                }
+            }
+        },
+        "manifestVersion": "1.0"
+    }
+}
