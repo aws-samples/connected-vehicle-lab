@@ -43,6 +43,8 @@ def on_message(message, response, token):
     headlight_handle(currentState.get('headlight'))
     window_handle(currentState.get('window'))
     door_handle(currentState.get('door'))
+    trunk_handle(currentState.get('trunk'))
+    
     msg = json.dumps(shadowClient.reportedShadowMessage)
     #print msg
     #Update the reported status to device shadow   
@@ -66,6 +68,11 @@ def door_handle(status):
   if status is not None:
     shadowClient.reportedShadowMessage['state']['reported']['door'] = status
     print ('Perform action on door status change : ' + str(status))
+
+def trunk_handle(status):
+  if status is not None:
+    shadowClient.reportedShadowMessage['state']['reported']['trunk'] = status
+    print ('Perform action on trunk status change : ' + str(status))
 
 mqttc.on_message = on_message
 shadowClient.on_message = on_message

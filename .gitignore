@@ -3,3 +3,12 @@ cdk.out/
 
 # Dependency directories
 node_modules/
+
+#.DS_Store
+.DS_Store
+vehicle-command/lambda/custom/.DS_Store
+vehicle-command/.DS_Store
+vehicle-command/lambda/.DS_Store
+
+#ASK Config
+vehicle-command/.ask/config

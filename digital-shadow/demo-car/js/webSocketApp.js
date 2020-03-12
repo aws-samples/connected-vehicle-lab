@@ -1,15 +1,15 @@
-var CONNECTED = false;   
+var CONNECTED = false;
 /**
-   * utilities to do sigv4
-   * @class SigV4Utils
-   */
+ * utilities to do sigv4
+ * @class SigV4Utils
+ */
 function SigV4Utils() {}
 
-SigV4Utils.getSignatureKey = function (key, date, region, service) {
+SigV4Utils.getSignatureKey = function(key, date, region, service) {
     var kDate = AWS.util.crypto.hmac('AWS4' + key, date, 'buffer');
     var kRegion = AWS.util.crypto.hmac(kDate, region, 'buffer');
     var kService = AWS.util.crypto.hmac(kRegion, service, 'buffer');
-    var kCredentials = AWS.util.crypto.hmac(kService, 'aws4_request', 'buffer');    
+    var kCredentials = AWS.util.crypto.hmac(kService, 'aws4_request', 'buffer');
     return kCredentials;
 };
 
@@ -49,28 +49,27 @@ SigV4Utils.getSignedUrl = function(host, region, credentials) {
 
 
 var connectOptions = {
-    
-    onSuccess: function(){
-        console.log("onSuccess called") 
+
+    onSuccess: function() {
+        console.log("onSuccess called")
         onConnect();
     },
     useSSL: true,
     timeout: 3,
     mqttVersion: 4,
-    
+
     onFailure: function() {
-        console.log("onFailure called") 
+        console.log("onFailure called")
     }
 };
 
 var client;
 
-function connectDeviceTwoWay(credentials)
-{
+function connectDeviceTwoWay(credentials) {
     //get the url
-    requestUrl = SigV4Utils.getSignedUrl (appVariables.IOT_ENDPOINT, appVariables.REGION, credentials)
-    clientId  = "1HGCP2F31BA126165-WebTwoWay"
-    
+    requestUrl = SigV4Utils.getSignedUrl(appVariables.IOT_ENDPOINT, appVariables.REGION, credentials)
+    clientId = "1HGCP2F31BA126165-WebTwoWay"
+
     // Create a client instance
     client = new Paho.MQTT.Client(requestUrl, clientId);
 
@@ -84,49 +83,58 @@ function connectDeviceTwoWay(credentials)
 
 // called when the client connects
 function onConnect() {
-  // Once a connection has been made, make a subscription and send a message.
-  console.log("onConnect");
-  CONNECTED = true;
-  client.subscribe("$aws/things/tcu/shadow/update/accepted");
+    // Once a connection has been made, make a subscription and send a message.
+    console.log("onConnect");
+    CONNECTED = true;
+    client.subscribe("$aws/things/tcu/shadow/update/accepted");
 }
 
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
     CONNECTED = false;
     if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
-  }
+        console.log("onConnectionLost:" + responseObject.errorMessage);
+    }
 }
 
 // called when a message arrives
 function onMessageArrived(message) {
-  CONNECTED = true;
-  console.log("onMessageArrived:" + message.payloadString);
-  payload = JSON.parse(message.payloadString);
-  payloadData = (payload.state.reported || payload.state.desired)  == undefined ? payload.state : (payload.state.reported == undefined ? payload.state.desired : payload.state.reported)
-  //console.log(payloadData);
-  if (payloadData.window != undefined) handleWindowCommand(payloadData.window);
-  if (payloadData.door != undefined) handleDoorCommand(payloadData.door);
-  if (payloadData.headlight != undefined) handleHeadlightCommand(payloadData.headlight);
+    CONNECTED = true;
+    console.log("onMessageArrived:" + message.payloadString);
+    payload = JSON.parse(message.payloadString);
+    payloadData = (payload.state.reported || payload.state.desired) == undefined ? payload.state : (payload.state.reported == undefined ? payload.state.desired : payload.state.reported)
+        //console.log(payloadData);
+    if (payloadData.window != undefined) handleWindowCommand(payloadData.window);
+    if (payloadData.door != undefined) handleDoorCommand(payloadData.door);
+    if (payloadData.headlight != undefined) handleHeadlightCommand(payloadData.headlight);
+    if (payloadData.trunk != undefined) handleDoorCommand(payloadData.trunk);
+
 }
 
 //this function will get called when user will click on window checkbox
-function handleWindowCommand (windowStatus) {
-  obj = document.getElementsByClassName("action window")[0];
-  obj.checked = windowStatus ==   "down" ? true : false;
-  console.log(obj.getAttribute("data-text") + " : " + obj.checked);  
+function handleWindowCommand(windowStatus) {
+    obj = document.getElementsByClassName("action window")[0];
+    obj.checked = windowStatus == "down" ? true : false;
+    console.log(obj.getAttribute("data-text") + " : " + obj.checked);
 }
 
 //this function will get called when user will click on door checkbox
-function handleDoorCommand (doorStatus) {
-  obj = document.getElementsByClassName("action door")[0];
-  obj.checked = doorStatus ==   "open" ? true : false;
-  console.log(obj.getAttribute("data-text") + " : " + obj.checked);  
+function handleDoorCommand(doorStatus) {
+    obj = document.getElementsByClassName("action door")[0];
+    obj.checked = doorStatus == "open" ? true : false;
+    console.log(obj.getAttribute("data-text") + " : " + obj.checked);
+}
+
+//this function will get called when user will click on trunk checkbox
+function handleTrunkCommand(trunkStatus) {
+    obj = document.getElementsByClassName("action trunk")[0];
+    obj.checked = trunkStatus == "open" ? true : false;
+    console.log(obj.getAttribute("data-text") + " : " + obj.checked);
 }
 
 //this function will get called when user will click on Headlight checkbox
-function handleHeadlightCommand (headlightStatus) {
-  obj = document.getElementsByClassName("action headlight")[0];
-   obj.checked = headlightStatus ==   "on" ? true : false;
-  console.log(obj.getAttribute("data-text") + " : " + obj.checked);  
+function handleHeadlightCommand(headlightStatus) {
+    obj = document.getElementsByClassName("action headlight")[0];
+    obj.checked = headlightStatus == "on" ? true : false;
+    console.log(obj.getAttribute("data-text") + " : " + obj.checked);
 }
