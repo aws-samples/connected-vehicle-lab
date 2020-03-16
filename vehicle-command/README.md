@@ -1,7 +1,7 @@
 # Build An Alexa Skill 'Open my trunk'
 
 
-![Alexa Skill and Device gateway](https://amitji-tech.s3.amazonaws.com/Device-Shadow.png)
+![Alexa Skill and Device gateway](https://amitji-tech.s3.amazonaws.com/Alexa-Device-Shadow.png)
 
 ### This is a simple tutorial to introduce a simple Alexa skill and code.
 
@@ -9,14 +9,14 @@
 Each skill consists of two basic parts, a front end and a back end.
 The front end is the voice interface, or VUI.
 The voice interface is configured through the voice interaction model.
-The back end is where the logic of your skill resides.
+The back end is where the logic of your skill resides. In this case, a lambda function which will invoked and interact with AWS IoT Core Device Shadow API.
 
-## Three Options for Skill Setup
-There are a number of different ways for you to setup your skill, depending on your experience and what tools you have available.
+## Setup
+1. Setup environment - Configure Cloud 9 IDE with Alexa CLI (ASK). Initialize ASK CLI with AWS profile
+2. Configure Alexa Skills
+3. Setup Lambda function. It will get invoked based on identified intent
 
- * If this is your first skill, choose the [Alexa-Hosted backend instructions](./instructions/setup-vui-alexa-hosted.md) to get started quickly.
- * If you want to manage the backend resources in your own AWS account, you can follow the [AWS-Hosted instructions](./instructions/setup-vui-aws-hosted.md).
- * Developers with the ASK Command Line Interface configured may follow the [ASK CLI instructions](./instructions/cli.md).
+
 
 ---
 

@@ -14,17 +14,15 @@ var AWS = require('aws-sdk');
 
 //This should be the device name mentioned in AWs IoT Core. 
 //In real life scenario, this should be captured as part of registraion
-const deviceName = 'tcu' 
+const deviceName = 'tcu'
 
 const ioT_EndPoint = 'data.iot.us-east-1.amazonaws.com' // Ensure you are using the right endpoint
-
-//Device Shadow message
+    //Device Shadow message
 var shadowMessage = {
-        "state" :
-        {
-            "desired": {   }
-        }
-    }   
+    "state": {
+        "desired": {}
+    }
+}
 
 
 const LaunchRequestHandler = {
@@ -43,24 +41,21 @@ const LaunchRequestHandler = {
 
 const WindowCommandIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'WindowCommandIntent';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getIntentName(handlerInput.requestEnvelope) === 'WindowCommandIntent';
     },
     handle(handlerInput) {
         var w_action_value = handlerInput.requestEnvelope.request.intent.slots.w_action.value;
         console.log(w_action_value);
         var speakOutput;
         const obj = "window";
-        if (w_action_value == "lower" || w_action_value == "down" || w_action_value == "open")
-        {
+        if (w_action_value == "lower" || w_action_value == "down" || w_action_value == "open") {
             updateDeviceShadow(obj, "down");
             speakOutput = handlerInput.t('WINDOW_DOWN')
-        }
-        else 
-        {
+        } else {
             updateDeviceShadow(obj, "up");
             speakOutput = handlerInput.t('WINDOW_UP')
-        }   
+        }
         console.log(speakOutput);
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -71,24 +66,21 @@ const WindowCommandIntentHandler = {
 
 const DoorCommandIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'DoorCommandIntent';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getIntentName(handlerInput.requestEnvelope) === 'DoorCommandIntent';
     },
     handle(handlerInput) {
         var d_action_value = handlerInput.requestEnvelope.request.intent.slots.d_action.value;
         console.log(d_action_value);
         var speakOutput;
         const obj = "door";
-        if (d_action_value == "lock" || d_action_value == "open")
-        {
+        if (d_action_value == "unlock" || d_action_value == "open") {
             updateDeviceShadow(obj, "open");
             speakOutput = handlerInput.t('DOOR_OPEN')
-        }
-        else 
-        {
+        } else {
             updateDeviceShadow(obj, "close");
             speakOutput = handlerInput.t('DOOR_CLOSE')
-        }   
+        }
         console.log(speakOutput);
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -99,24 +91,21 @@ const DoorCommandIntentHandler = {
 
 const HeadlightCommandIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HeadlightCommandIntent';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getIntentName(handlerInput.requestEnvelope) === 'HeadlightCommandIntent';
     },
     handle(handlerInput) {
         var h_action_value = handlerInput.requestEnvelope.request.intent.slots.h_action.value;
         console.log(h_action_value);
         var speakOutput;
         const obj = "headlight";
-        if (h_action_value == "on")
-        {
+        if (h_action_value == "on") {
             updateDeviceShadow(obj, "on");
             speakOutput = handlerInput.t('HEADLIGHT_ON')
-        }
-        else 
-        {
+        } else {
             updateDeviceShadow(obj, "off");
             speakOutput = handlerInput.t('HEADLIGHT_OFF')
-        }   
+        }
         console.log(speakOutput);
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -127,8 +116,8 @@ const HeadlightCommandIntentHandler = {
 
 const HelpIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
         const speakOutput = handlerInput.t('HELP_MSG');
@@ -142,9 +131,9 @@ const HelpIntentHandler = {
 
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.CancelIntent'
-                || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.CancelIntent' ||
+                Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
         const speakOutput = handlerInput.t('GOODBYE_MSG');
@@ -161,8 +150,8 @@ const CancelAndStopIntentHandler = {
  * */
 const FallbackIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
     },
     handle(handlerInput) {
         const speakOutput = handlerInput.t('FALLBACK_MSG');
@@ -199,7 +188,7 @@ const IntentReflectorHandler = {
     },
     handle(handlerInput) {
         const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
-        const speakOutput = handlerInput.t('REFLECTOR_MSG', {intentName: intentName});
+        const speakOutput = handlerInput.t('REFLECTOR_MSG', { intentName: intentName });
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -261,21 +250,21 @@ exports.handler = Alexa.SkillBuilders.custom()
     .withCustomUserAgent('vehicle/genie/v1.2')
     .lambda();
 
-   function updateDeviceShadow (obj, command)
-   {
-        shadowMessage.state.desired[obj] =   command;
-        var iotdata = new AWS.IotData({endpoint: ioT_EndPoint});
-        var params = {
-            payload: JSON.stringify(shadowMessage) , /* required */
-            thingName: deviceName /* required */   
-        };
-    
-        iotdata.updateThingShadow(params, function(err, data) {
-            if (err) 
-                console.log(err, err.stack); // an error occurred
-            else     
-                console.log(data);  
-            //reset the shadow    
-            shadowMessage.state.desired = {}
-        });
-    } 
+function updateDeviceShadow(obj, command) {
+    shadowMessage.state.desired[obj] = command;
+    var iotdata = new AWS.IotData({ endpoint: ioT_EndPoint });
+    var params = {
+        payload: JSON.stringify(shadowMessage),
+        /* required */
+        thingName: deviceName /* required */
+    };
+
+    iotdata.updateThingShadow(params, function(err, data) {
+        if (err)
+            console.log(err, err.stack); // an error occurred
+        else
+            console.log(data);
+        //reset the shadow    
+        shadowMessage.state.desired = {}
+    });
+}
