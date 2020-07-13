@@ -23,17 +23,6 @@
             "window up"
           ],
           "keywords": []
-        },
-        "en-GB": {
-          "name": "vehicle-command",
-          "summary": "Control Vehicle using voice command",
-          "description": "Allow you to control vehicle using voice command",
-          "examplePhrases": [
-            "Alexa open genie",
-            "ask genie to lower window",
-            "window up"
-          ],
-          "keywords": []
         }
       },
       "isAvailableWorldwide": true,
