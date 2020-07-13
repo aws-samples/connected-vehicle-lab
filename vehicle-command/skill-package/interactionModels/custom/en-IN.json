@@ -53,21 +53,6 @@
                     ]
                 },
                 {
-                    "name": "TrunkCommandIntent",
-                    "slots": [
-                        {
-                            "name": "d_action",
-                            "type": "d_action_type"
-                        }
-                    ],
-                    "samples": [
-                        "{d_action} the door",
-                        "door {d_action}",
-                        "{d_action} my door",
-                        "{d_action} door"
-                    ]
-                },
-                {
                     "name": "HeadlightCommandIntent",
                     "slots": [
                         {
