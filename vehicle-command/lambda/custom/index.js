@@ -89,6 +89,35 @@ const DoorCommandIntentHandler = {
     }
 };
 
+const TrunkCommandIntentHandler = {
+                canHandle(handlerInput) {
+                return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+                && Alexa.getIntentName(handlerInput.requestEnvelope) === 'TrunkCommandIntent';
+                },
+                    handle(handlerInput) {
+                    var t_action_value = handlerInput.requestEnvelope.request.intent.slots.t_action.value;
+                    console.log(t_action_value);
+                    var speakOutput;
+                    const obj = "trunk";
+                    if (t_action_value == "lock" || t_action_value == "open")
+                    {
+                        updateDeviceShadow(obj, "open");
+                        speakOutput = handlerInput.t('TRUNK_OPEN')
+                    }
+                    else 
+                    {
+                        updateDeviceShadow(obj, "close");
+                        speakOutput = handlerInput.t('TRUNK_CLOSE')
+                    } 
+                    console.log(speakOutput);
+                    return handlerInput.responseBuilder
+                    .speak(speakOutput)
+                    //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+                    .getResponse();
+                }
+            };
+            
+
 const HeadlightCommandIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
@@ -239,6 +268,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         DoorCommandIntentHandler,
         HeadlightCommandIntentHandler,
         HelpIntentHandler,
+        TrunkCommandIntentHandler,
         CancelAndStopIntentHandler,
         FallbackIntentHandler,
         SessionEndedRequestHandler,
@@ -250,21 +280,20 @@ exports.handler = Alexa.SkillBuilders.custom()
     .withCustomUserAgent('vehicle/genie/v1.2')
     .lambda();
 
-function updateDeviceShadow(obj, command) {
-    shadowMessage.state.desired[obj] = command;
-    var iotdata = new AWS.IotData({ endpoint: ioT_EndPoint });
-    var params = {
-        payload: JSON.stringify(shadowMessage),
-        /* required */
-        thingName: deviceName /* required */
-    };
-
-    iotdata.updateThingShadow(params, function(err, data) {
-        if (err)
+function updateDeviceShadow (obj, command)
+    {
+        shadowMessage.state.desired[obj] = command;
+        var iotdata = new AWS.IotData({endpoint: ioT_EndPoint});
+        var params = {
+        payload: JSON.stringify(shadowMessage) , /* required */
+        thingName: deviceName /* required */ 
+        };
+        iotdata.updateThingShadow(params, function(err, data) {
+            if (err) 
             console.log(err, err.stack); // an error occurred
-        else
-            console.log(data);
-        //reset the shadow    
-        shadowMessage.state.desired = {}
-    });
-}
+            else 
+            console.log(data); 
+            //reset the shadow 
+            shadowMessage.state.desired = {}
+        });
+} 

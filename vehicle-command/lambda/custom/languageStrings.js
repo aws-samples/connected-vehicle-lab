@@ -15,11 +15,13 @@ module.exports = {
             HEADLIGHT_OFF: 'Headlight Off',
             DOOR_OPEN: 'Door Open',
             DOOR_CLOSE: 'Door Close',
+           TRUNK_OPEN: 'Trunk Open',
+            TRUNK_CLOSE: 'Trunk Close', 
             HELP_MSG: 'You can say open command! How can I help?',
             GOODBYE_MSG: 'Goodbye!',
             REFLECTOR_MSG: 'You just triggered {{intentName}}',
             FALLBACK_MSG: 'Sorry, I don\'t know about that. Please try again.',
-            ERROR_MSG: 'Sorry, I had trouble doing what you asked. Please try again.'
+            ERROR_MSG: 'Sorry, I had trouble doing what you asked. Please try again.',
         }
     }
 }
