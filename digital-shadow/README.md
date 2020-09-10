@@ -14,9 +14,9 @@ connected-vehicle-lab/digital-shadow
  - demo-car 
  - tcu
 
-Open Cloud 9 IDE environment terminal window and install AWS CDK. More information @ https://aws.amazon.com/cdk/. This code has tested with CDK [1.19.0]
+Open Cloud 9 IDE environment terminal window and check AWS CDK version. More information @ https://aws.amazon.com/cdk/. This code has tested with CDK [1.61.0 (build 72e6727)]
 
-```npm install -g  aws-cdk@1.19.0```
+```cdk --version```
 
 ```cd connected-vehicle-lab/digital-shadow/connected-vehicle-app-cdk ```
 
@@ -26,7 +26,7 @@ Now fire cdk synth command to validate the setup. If it’s a YAML output that m
 
 ```cdk synth```
 
-Open connected-vehicle-app-cdk/lib/connected-vehicle-app-cdk-stack.js into IDE
+Open /connected-vehicle-lab/digital-shadow/connected-vehicle-app-cdk/lib/connected-vehicle-app-cdk-stack.js into IDE
 It will create - 
 1. Cloudfront distribution of the website
 2. Download the source code and create S3 bucket and website
@@ -60,7 +60,7 @@ Now lets open AWS IoT Core console page > Manage > open ‘tcu’ things page.
 We will generate the certificate and associate the policy- 
 Click on security > create certificate > activate  and download individual *-private.pem.key and *-certificate.pem.crt files.  > Attach policy 'devicePolicy'
 
-For both tcuShadowWrite.py and tcuShadowRead.py  -
+For both tcuShadowWrite.py and tcuShadowRead.py at /connected-vehicle-lab/digital-shadow/tcu/ -
 
 1) mqttc.configureEndpoint() - Update IoT Endpoint (AWS IoT Core Console > Setting > Custom EndPoint) 
 2) mqttc.configureCredentials() - Copy certificate under tcu folder  and update certficate name  
@@ -76,7 +76,7 @@ lets install AWSIoTPythonSDK
 ```pip install AWSIoTPythonSDK```
 …….
 ….
-Successfully installed AWSIoTPythonSDK-1.4.7
+Successfully installed AWSIoTPythonSDK-1.4.9
 
 Now open tcuShadowRead.py in Cloud 9 IDE and click run (green button) 
 You should see response like
