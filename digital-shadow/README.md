@@ -53,7 +53,7 @@ After successful run, You will get below output from cdk -
 5) connected-vehicle-app.deviceName = tcu
 6) connected-vehicle-app.devicePolicy = devicePolicy
 
-####  Device Enviornment Configuration and Authentication
+####  Device Environment Configuration and Authentication
 
 Now lets open AWS IoT Core console page > Manage > open ‘tcu’ things page.
 
