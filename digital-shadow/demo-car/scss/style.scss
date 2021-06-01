@@ -749,14 +749,14 @@ div {
   transform: translateX(-300px);
   line-height: 14px;
   margin: 5px;
-  &::before {
+  /*&::before {
     content: attr(data-text);
     font-size: 16px;
     font-family: 'Encode Sans Condensed', sans-serif;
     padding-left: 20px;
     transition: 1000ms;
     cursor: pointer;
-  }
+  }*/
   &:hover::before {
     color: $baseColor;
     transition: 300ms;
