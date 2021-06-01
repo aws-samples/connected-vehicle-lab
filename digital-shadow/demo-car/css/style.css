@@ -771,14 +771,14 @@ div {
   line-height: 14px;
   margin: 5px;
 }
-.action::before {
+/*.action::before {
   content: attr(data-text);
   font-size: 16px;
   font-family: 'Encode Sans Condensed', sans-serif;
   padding-left: 20px;
   transition: 1000ms;
   cursor: pointer;
-}
+}*/
 .action:hover::before {
   color: #193aa0;
   transition: 300ms;
